@@ -5,10 +5,10 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Container, Text } from 'native-base';
 
 import { MonoText } from '../components/StyledText';
 
