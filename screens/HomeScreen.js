@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { Container, Header, Content, List, ListItem, Text, Left, Button, Icon, Body, Title, Right } from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, Left, Button, /*Icon, */ Body, Title, Right } from 'native-base';
 
 import { connect } from 'react-redux';
 import {
@@ -11,8 +11,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
-import { MonoText } from '../components/StyledText';
 
 const HomeScreen = (props) => {
   const { plants, navigation } = props;
@@ -30,7 +28,7 @@ const HomeScreen = (props) => {
           </Body>
           <Right>
             <Button transparent>
-              <Icon name='add' />
+              {/* <Icon name='add' /> */}
             </Button>
           </Right>
         </Header>

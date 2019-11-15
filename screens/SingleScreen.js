@@ -8,19 +8,21 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  TextInput
+  TextInput,
 } from 'react-native';
-import { Text } from 'native-base';
+import { Text, Radio, ListItem, Left, Right } from 'native-base';
 
 import { addReminder } from "../redux/reducers/plants"
 import reminderIntervalTypes from "../constants/ReminderIntervalTypes";
 
 const SingleScreen = (props) => {
+    const { navigation, plants } = props;
+    const { DAILY, WEEKLY, MONTHLY} = reminderIntervalTypes;
+
     const [isAddNewReminderInputShown, setIsAddNewReminderInputShown] = useState(false)
     const [newReminderName, setNewReminderName] = useState('')
-    const [newReminderInterval, setNewReminderInterval] = useState(reminderIntervalTypes.DAILY)
+    const [newReminderInterval, setNewReminderInterval] = useState(DAILY)
 
-    const { navigation, plants } = props;
     const plant = navigation.getParam('plant')
     const plantId = plant.id
     const selectedPlant = plants.find(plant => plant.id === plantId)
@@ -30,11 +32,15 @@ const SingleScreen = (props) => {
     }
 
     const handleAddReminderPress = () => {
-        props.addReminder(plant.id, newReminderName, newReminderInterval)
+        props.addReminder(plantId, newReminderName, newReminderInterval)
     }
 
-    handleNewReminderNameChange = (e) => {
-        setNewReminderName(e.target.value)
+    const handleNewReminderNameChange = (text) => {
+        setNewReminderName(text)
+    }
+
+    const handleNewReminderIntervalChange = reminderIntervalType => () => {
+        setNewReminderInterval(reminderIntervalType)
     }
 
     const goBack = () => { navigation.goBack() }
@@ -75,10 +81,58 @@ const SingleScreen = (props) => {
         {isAddNewReminderInputShown ?
            <View>
                <TextInput
-            onChangeText={this.handleNewReminderNameChange}
+            onChangeText={handleNewReminderNameChange}
             value={newReminderName}
             placeholder={"Name..."}
           />
+
+    <ListItem
+        onPress={handleNewReminderIntervalChange(DAILY)}
+        selected={newReminderInterval === DAILY}
+    >
+
+            <Left>
+              <Text>Daily</Text>
+            </Left>
+            <Right>
+              <Radio
+                color={"#f0ad4e"}
+                selectedColor={"#5cb85c"}
+                selected={newReminderInterval === DAILY}
+                />
+            </Right>
+          </ListItem>
+        <ListItem
+            onPress={handleNewReminderIntervalChange(WEEKLY)}
+            selected={newReminderInterval === WEEKLY}
+        >
+            <Left>
+              <Text>Weekly</Text>
+            </Left>
+            <Right>
+              <Radio
+                color={"#f0ad4e"}
+                selectedColor={"#5cb85c"}
+                selected={newReminderInterval === WEEKLY}
+                />
+            </Right>
+          </ListItem>
+        <ListItem
+            onPress={handleNewReminderIntervalChange(MONTHLY)}
+            selected={newReminderInterval === MONTHLY}
+        >
+            <Left>
+              <Text>Monthly</Text>
+            </Left>
+            <Right>
+              <Radio
+                color={"#f0ad4e"}
+                selectedColor={"#5cb85c"}
+                selected={newReminderInterval === reminderIntervalTypes.MONTHLY}
+                />
+            </Right>
+          </ListItem>
+
                <Text onPress={handleAddReminderPress}>Add new</Text>
             <Text onPress={toggleIsAddNewReminderInputShown}>Cancel</Text>
             </View>

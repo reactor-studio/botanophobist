@@ -3,6 +3,7 @@ import mockedPlants from "../../mocks/plants";
 const ADD_REMINDER = "ADD_REMINDER"
 
 const initialState = {
+    idGenerator: 4,
     plants: mockedPlants
 }
 
@@ -16,13 +17,14 @@ function reducer(state = initialState, action) {
                 reminders: [
                     ...plant.reminders,
                     {
-                        id: Math.floor(Math.random() * 1000),
-                        name: "custom",
-                        interval: "custom Interval",
+                        id: state.idGenerator,
+                        name: action.payload.newReminderName,
+                        interval: action.payload.newReminderInterval,
                         startDate: new Date()
                     }
                 ]
-            } : plant )
+            } : plant ),
+            idGenerator: state.idGenerator + 1
         };
     //   case 'DECREMENT':
     //     return state - 1;
@@ -31,9 +33,9 @@ function reducer(state = initialState, action) {
     }
   }
 
-  export const addReminder = (plantId) => ({
+  export const addReminder = (plantId, newReminderName, newReminderInterval) => ({
       type: ADD_REMINDER,
-      payload: { plantId }
+      payload: {plantId, newReminderName, newReminderInterval}
   })
 
 export default reducer;
