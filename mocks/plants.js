@@ -1,4 +1,4 @@
-import reminderIntervalTypes from "../constants/ReminderIntervalTypes"
+import {reminderIntervalTypes} from "../constants/ReminderIntervalTypes"
 
 export default plants = [{
     id: 1,

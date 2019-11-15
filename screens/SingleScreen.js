@@ -2,18 +2,15 @@ import * as WebBrowser from 'expo-web-browser';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   View,
   TextInput,
 } from 'react-native';
-import { Text, Radio, ListItem, Left, Right } from 'native-base';
+import { Text, Radio, ListItem, Left, Right, Container, Header, Button, Icon, Body, Title, Content } from 'native-base';
 
 import { addReminder } from "../redux/reducers/plants"
-import reminderIntervalTypes from "../constants/ReminderIntervalTypes";
+import {reminderIntervalTypes, translations} from "../constants/ReminderIntervalTypes";
 
 const SingleScreen = (props) => {
     const { navigation, plants } = props;
@@ -54,21 +51,24 @@ const SingleScreen = (props) => {
     }
 
   return (
-    <View style={styles.container}>
+    <Container>
+<Header>
+          <Left>
+            <Button onPress={goBack} transparent>
+              <Icon name='arrow-back' />
+            </Button>
+          </Left>
+          <Body>
+            <Title>{plant.name}</Title>
+          </Body>
+        </Header>
+      <Content>
+      <View style={styles.container}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
     >
-        <TouchableOpacity onPress={goBack}>
-            <Text>
-              {"<"}
-            </Text>
-          </TouchableOpacity>
-
         <View>
-            <Text>
-              {selectedPlant.name}
-            </Text>
             <Text>
               {selectedPlant.description}
             </Text>
@@ -92,7 +92,7 @@ const SingleScreen = (props) => {
     >
 
             <Left>
-              <Text>Daily</Text>
+              <Text>{translations[DAILY]}</Text>
             </Left>
             <Right>
               <Radio
@@ -107,7 +107,7 @@ const SingleScreen = (props) => {
             selected={newReminderInterval === WEEKLY}
         >
             <Left>
-              <Text>Weekly</Text>
+              <Text>{translations[WEEKLY]}</Text>
             </Left>
             <Right>
               <Radio
@@ -122,7 +122,7 @@ const SingleScreen = (props) => {
             selected={newReminderInterval === MONTHLY}
         >
             <Left>
-              <Text>Monthly</Text>
+              <Text>{translations[MONTHLY]}</Text>
             </Left>
             <Right>
               <Radio
@@ -141,6 +141,8 @@ const SingleScreen = (props) => {
     }
       </ScrollView>
     </View>
+      </Content>
+    </Container>
   );
 }
 
