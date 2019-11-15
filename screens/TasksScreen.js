@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import { Container, Header, Content, List, ListItem, Text, CheckBox } from 'native-base';
 
 const renderDate = (plant) => {
-  console.log(plant);
   return plant.reminders.map( (item, i) => {
-    console.log(item);
     // if(i === 0) {
     //   return (
     //     <Content>
