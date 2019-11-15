@@ -3,13 +3,9 @@ import { Container, Header, Content, List, ListItem, Text, Left, Button, Icon, B
 
 import { connect } from 'react-redux';
 import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
   TouchableOpacity,
-  View,
 } from 'react-native';
+
 
 const HomeScreen = (props) => {
   const { plants, navigation } = props;

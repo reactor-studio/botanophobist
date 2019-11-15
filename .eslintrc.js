@@ -2,7 +2,7 @@ module.exports = {
     "env": {
         "es6": true
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended", 'plugin:react/recommended'],
     "parser": "babel-eslint",
     "plugins": [
         "react"
