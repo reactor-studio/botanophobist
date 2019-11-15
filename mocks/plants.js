@@ -7,12 +7,14 @@ export default plants = [{
     reminders: [{
         id: 1,
         name: "Zaliti",
-        interval: reminderIntervalTypes.DAILY
+        interval: reminderIntervalTypes.DAILY,
+        startDate: new Date()
     },
     {
         id: 2,
         name: "Pognojiti",
-        interval: reminderIntervalTypes.WEEKLY
+        interval: reminderIntervalTypes.WEEKLY,
+        startDate: new Date()
     }]
 }, {
     id: 2,
@@ -21,7 +23,8 @@ export default plants = [{
     reminders: [{
         id: 3,
         name: "Presaditi",
-        interval: reminderIntervalTypes.MONTHLY
+        interval: reminderIntervalTypes.MONTHLY,
+        startDate: new Date()
     },
     ]
 }]

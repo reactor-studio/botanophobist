@@ -18,7 +18,8 @@ function reducer(state = initialState, action) {
                     {
                         id: Math.floor(Math.random() * 1000),
                         name: "custom",
-                        interval: "custom Interval"
+                        interval: "custom Interval",
+                        startDate: new Date()
                     }
                 ]
             } : plant )

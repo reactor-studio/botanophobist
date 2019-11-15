@@ -8,24 +8,35 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  TextInput
 } from 'react-native';
-import { Container, Text } from 'native-base';
+import { Text } from 'native-base';
 
-import { MonoText } from '../components/StyledText';
 import { addReminder } from "../redux/reducers/plants"
+import reminderIntervalTypes from "../constants/ReminderIntervalTypes";
 
 const SingleScreen = (props) => {
     const [isAddNewReminderInputShown, setIsAddNewReminderInputShown] = useState(false)
-    
+    const [newReminderName, setNewReminderName] = useState('')
+    const [newReminderInterval, setNewReminderInterval] = useState(reminderIntervalTypes.DAILY)
+
     const { navigation, plants } = props;
     const plant = navigation.getParam('plant')
     const plantId = plant.id
     const selectedPlant = plants.find(plant => plant.id === plantId)
 
-    const toggleIsAddNewReminderInputShown = () => { setIsAddNewReminderInputShown(!isAddNewReminderInputShown) }
-    const handleAddReminderPress = () => {
-        props.addReminder(plant.id)
+    const toggleIsAddNewReminderInputShown = () => {
+        setIsAddNewReminderInputShown(!isAddNewReminderInputShown)
     }
+
+    const handleAddReminderPress = () => {
+        props.addReminder(plant.id, newReminderName, newReminderInterval)
+    }
+
+    handleNewReminderNameChange = (e) => {
+        setNewReminderName(e.target.value)
+    }
+
     const goBack = () => { navigation.goBack() }
 
     if (!selectedPlant) {
@@ -63,6 +74,11 @@ const SingleScreen = (props) => {
         </View>
         {isAddNewReminderInputShown ?
            <View>
+               <TextInput
+            onChangeText={this.handleNewReminderNameChange}
+            value={newReminderName}
+            placeholder={"Name..."}
+          />
                <Text onPress={handleAddReminderPress}>Add new</Text>
             <Text onPress={toggleIsAddNewReminderInputShown}>Cancel</Text>
             </View>
