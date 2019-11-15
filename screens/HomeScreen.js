@@ -11,8 +11,14 @@ import {
 import { Container, Text } from 'native-base';
 
 import { MonoText } from '../components/StyledText';
+import plants from "../constants/plants";
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
+  const handlePlantItemPress = plant => () => {
+
+    props.navigation.navigate('Single', { plantId: plant.id})
+  }
+  
   return (
     <View style={styles.container}>
       <ScrollView
@@ -51,6 +57,13 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
         </View>
+        {plants.map(plant => (<View key={plant.id} style={plantItemStyles.container}>
+          <TouchableOpacity onPress={handlePlantItemPress(plant)} style={styles.helpLink}>
+            <Text style={plantItemStyles.name}>
+              {plant.name}
+            </Text>
+          </TouchableOpacity>
+        </View>))}
       </ScrollView>
 
       <View style={styles.tabBarInfoContainer}>
@@ -196,3 +209,15 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
 });
+
+
+const plantItemStyles = StyleSheet.create({
+  container: {
+    padding: 15,
+    backgroundColor: "green"
+  },
+  name: {
+    color: "yellow"
+  }
+});
+
