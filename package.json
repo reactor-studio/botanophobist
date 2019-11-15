@@ -31,7 +31,10 @@
     "redux": "^4.0.4"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "babel-preset-expo": "^7.0.0",
+    "eslint": "^6.6.0",
+    "eslint-plugin-react": "^7.16.0",
     "jest-expo": "^35.0.0"
   },
   "private": true

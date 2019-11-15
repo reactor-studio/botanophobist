@@ -28,7 +28,7 @@ const HomeScreen = (props) => {
           </Body>
           <Right>
             <Button transparent>
-              {/* <Icon name='add' /> */}
+              <Icon name='add' style={{color: "blue"}} />
             </Button>
           </Right>
         </Header>
@@ -37,9 +37,14 @@ const HomeScreen = (props) => {
           {plants.map(plant => (
             <ListItem>
               <TouchableOpacity onPress={handlePlantItemPress(plant)}>
-                <Text>
-                  {plant.name}
-                </Text>
+                <Left>
+                    <Title>{plant.name}</Title>
+                    <Text>
+                      {plant.description}
+                    </Text>
+                </Left>
+                <Body/>
+                <Right/>
               </TouchableOpacity>
             </ListItem>
           ))}
