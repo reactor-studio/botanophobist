@@ -18,13 +18,34 @@ import {
 import { connect } from "react-redux";
 import { TouchableOpacity } from "react-native";
 
+const Plant = ({ plant, handlePlantItemPress }) => (
+  <ListItem avatar key={plant.id}>
+    <Left>
+      <Thumbnail
+        source={{
+          uri: "https://www.ikea.com/PIAimages/0614197_PE686822_S5.JPG?f=s"
+        }}
+        small
+      />
+    </Left>
+    <Body>
+      <Text>{plant.name}</Text>
+      <Text>{plant.description}</Text>
+    </Body>
+    <Right style={{ justifyContent: "center" }}>
+      <TouchableOpacity onPress={handlePlantItemPress(plant)}>
+        <Icon name="arrow-forward" />
+      </TouchableOpacity>
+    </Right>
+  </ListItem>
+);
+
 const HomeScreen = props => {
   const { plants, navigation } = props;
 
   const handlePlantItemPress = plant => () => {
     navigation.navigate("Single", { plant });
   };
-
   const handleAddNewPlantPress = () => {
     navigation.navigate("AddNewPlant");
   };
@@ -44,27 +65,12 @@ const HomeScreen = props => {
       </Header>
       <Content>
         <List>
-          {plants.map(plant => (
-            <ListItem avatar key={plant.id}>
-              <Left>
-                <Thumbnail
-                  source={{
-                    uri:
-                      "https://www.ikea.com/PIAimages/0614197_PE686822_S5.JPG?f=s"
-                  }}
-                  small
-                />
-              </Left>
-              <Body>
-                <Text>{plant.name}</Text>
-                <Text>{plant.description}</Text>
-              </Body>
-              <Right style={{ justifyContent: "center" }}>
-                <TouchableOpacity onPress={handlePlantItemPress(plant)}>
-                  <Icon name="arrow-forward" />
-                </TouchableOpacity>
-              </Right>
-            </ListItem>
+          {plants.map((plant, i) => (
+            <Plant
+              key={i}
+              plant={plant}
+              handlePlantItemPress={handlePlantItemPress}
+            />
           ))}
         </List>
       </Content>

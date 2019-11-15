@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { ScrollView, StyleSheet, View, TextInput } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   Text,
   Radio,
@@ -13,8 +13,13 @@ import {
   Icon,
   Body,
   Title,
-  Content
+  Content,
+  Thumbnail,
+  List,
+  Input,
+  Item
 } from "native-base";
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 import {
   addReminder,
@@ -45,6 +50,7 @@ const SingleScreen = props => {
   };
 
   const handleAddReminderPress = () => {
+    setIsAddNewReminderInputShown(!isAddNewReminderInputShown);
     props.addReminder(plantId, newReminderName, newReminderInterval);
   };
 
@@ -88,101 +94,138 @@ const SingleScreen = props => {
         <Body>
           <Title>{plant.name}</Title>
         </Body>
+        <Right />
       </Header>
       <Content>
-        <View style={styles.container}>
-          <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.contentContainer}
-          >
-            <View>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+          <Row>
+            <Col size={25}>
+              <Thumbnail
+                source={{
+                  uri:
+                    "https://www.ikea.com/PIAimages/0614197_PE686822_S5.JPG?f=s"
+                }}
+              />
+            </Col>
+            <Col size={58}>
+              <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                {selectedPlant.name}
+              </Text>
               <Text>{selectedPlant.description}</Text>
-            </View>
-            <View>
-              {selectedPlant.reminders.map(reminder => (
-                <View key={reminder.id}>
+            </Col>
+            <Col size={17} style={{ alignContent: "right" }}>
+              <Button
+                danger
+                onPress={handleDeletePlantPress}
+                style={{ width: 42 }}
+              >
+                <Text>X</Text>
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Button light small onPress={toggleIsAddNewReminderInputShown}>
+                <Text>
+                  {!isAddNewReminderInputShown ? "Add New Reminder" : "Hide"}
+                </Text>
+              </Button>
+              {isAddNewReminderInputShown && (
+                <View style={{ margin: 20 }}>
+                  <Item regular>
+                    <Input
+                      onChangeText={handleNewReminderNameChange}
+                      value={newReminderName}
+                      placeholder={"Name..."}
+                    />
+                  </Item>
+
+                  <ListItem
+                    onPress={handleNewReminderIntervalChange(DAILY)}
+                    selected={newReminderInterval === DAILY}
+                  >
+                    <Left>
+                      <Text>{translations[DAILY]}</Text>
+                    </Left>
+                    <Right>
+                      <Radio
+                        color={"#f0ad4e"}
+                        selectedColor={"#5cb85c"}
+                        selected={newReminderInterval === DAILY}
+                      />
+                    </Right>
+                  </ListItem>
+                  <ListItem
+                    onPress={handleNewReminderIntervalChange(WEEKLY)}
+                    selected={newReminderInterval === WEEKLY}
+                  >
+                    <Left>
+                      <Text>{translations[WEEKLY]}</Text>
+                    </Left>
+                    <Right>
+                      <Radio
+                        color={"#f0ad4e"}
+                        selectedColor={"#5cb85c"}
+                        selected={newReminderInterval === WEEKLY}
+                      />
+                    </Right>
+                  </ListItem>
+                  <ListItem
+                    onPress={handleNewReminderIntervalChange(MONTHLY)}
+                    selected={newReminderInterval === MONTHLY}
+                  >
+                    <Left>
+                      <Text>{translations[MONTHLY]}</Text>
+                    </Left>
+                    <Right>
+                      <Radio
+                        color={"#f0ad4e"}
+                        selectedColor={"#5cb85c"}
+                        selected={
+                          newReminderInterval === reminderIntervalTypes.MONTHLY
+                        }
+                      />
+                    </Right>
+                  </ListItem>
+                  <Row style={{ paddingTop: 20 }}>
+                    <Left>
+                      <Button success onPress={handleAddReminderPress}>
+                        <Text>Add new</Text>
+                      </Button>
+                    </Left>
+                    <Right>
+                      <Button light onPress={toggleIsAddNewReminderInputShown}>
+                        <Text>Cancel</Text>
+                      </Button>
+                    </Right>
+                  </Row>
+                </View>
+              )}
+            </Col>
+          </Row>
+          <List>
+            {selectedPlant.reminders.map(reminder => (
+              <ListItem>
+                <Left>
                   <Text>
                     {reminder.name} - {reminder.interval}
                   </Text>
+                </Left>
+                <Right>
                   <Button
                     onPress={handleDeleteReminderPress(reminder.id)}
                     transparent
                   >
                     <Icon name="close" />
                   </Button>
-                </View>
-              ))}
-            </View>
-            <Button onPress={handleDeletePlantPress} transparent>
-              <Text>Delete Plant</Text>
-              <Icon name="close" />
-            </Button>
-            {isAddNewReminderInputShown ? (
-              <View>
-                <TextInput
-                  onChangeText={handleNewReminderNameChange}
-                  value={newReminderName}
-                  placeholder={"Name..."}
-                />
-
-                <ListItem
-                  onPress={handleNewReminderIntervalChange(DAILY)}
-                  selected={newReminderInterval === DAILY}
-                >
-                  <Left>
-                    <Text>{translations[DAILY]}</Text>
-                  </Left>
-                  <Right>
-                    <Radio
-                      color={"#f0ad4e"}
-                      selectedColor={"#5cb85c"}
-                      selected={newReminderInterval === DAILY}
-                    />
-                  </Right>
-                </ListItem>
-                <ListItem
-                  onPress={handleNewReminderIntervalChange(WEEKLY)}
-                  selected={newReminderInterval === WEEKLY}
-                >
-                  <Left>
-                    <Text>{translations[WEEKLY]}</Text>
-                  </Left>
-                  <Right>
-                    <Radio
-                      color={"#f0ad4e"}
-                      selectedColor={"#5cb85c"}
-                      selected={newReminderInterval === WEEKLY}
-                    />
-                  </Right>
-                </ListItem>
-                <ListItem
-                  onPress={handleNewReminderIntervalChange(MONTHLY)}
-                  selected={newReminderInterval === MONTHLY}
-                >
-                  <Left>
-                    <Text>{translations[MONTHLY]}</Text>
-                  </Left>
-                  <Right>
-                    <Radio
-                      color={"#f0ad4e"}
-                      selectedColor={"#5cb85c"}
-                      selected={
-                        newReminderInterval === reminderIntervalTypes.MONTHLY
-                      }
-                    />
-                  </Right>
-                </ListItem>
-
-                <Text onPress={handleAddReminderPress}>Add new</Text>
-                <Text onPress={toggleIsAddNewReminderInputShown}>Cancel</Text>
-              </View>
-            ) : (
-              <Text onPress={toggleIsAddNewReminderInputShown}>
-                Add New Reminder
-              </Text>
-            )}
-          </ScrollView>
-        </View>
+                </Right>
+              </ListItem>
+            ))}
+          </List>
+        </ScrollView>
       </Content>
     </Container>
   );
