@@ -109,11 +109,11 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => ({
-    plants: state.plants.plants
-  })
+  plants: state.plants.plants
+})
 
-  const mapDispatchToProps = {
-      addReminder
-  }
+const mapDispatchToProps = {
+    addReminder
+}
   
-  export default connect(mapStateToProps, mapDispatchToProps)(SingleScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(SingleScreen)
