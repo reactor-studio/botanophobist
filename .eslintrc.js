@@ -5,8 +5,10 @@ module.exports = {
     "extends": ["eslint:recommended", 'plugin:react/recommended'],
     "parser": "babel-eslint",
     "plugins": [
-        "react"
+        "react",
+        "prettier"
     ],
     "rules": {
+        "prettier/prettier": "error"
     }
 };
