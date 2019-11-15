@@ -1,6 +1,5 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { Container, Header, Content, List, ListItem, Text, Left, Button, Icon, Body, Title, Right } from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, Left, Button, Icon, Body, Title, Right, Thumbnail } from 'native-base';
 
 import { connect } from 'react-redux';
 import {
@@ -35,18 +34,24 @@ const HomeScreen = (props) => {
       <Content>
         <List>
           {plants.map(plant => (
-            <ListItem>
-              <TouchableOpacity onPress={handlePlantItemPress(plant)}>
+              <ListItem avatar>
                 <Left>
-                    <Title>{plant.name}</Title>
-                    <Text>
-                      {plant.description}
-                    </Text>
+                  <Thumbnail source={{ uri: 'https://www.ikea.com/PIAimages/0614197_PE686822_S5.JPG?f=s' }} small />
                 </Left>
-                <Body/>
-                <Right/>
-              </TouchableOpacity>
-            </ListItem>
+                <Body>
+                  <Text>
+                    {plant.name}
+                  </Text>
+                  <Text>
+                    {plant.description}
+                  </Text>
+                </Body>
+                <Right style={{ justifyContent: "center"}}>
+                  <TouchableOpacity onPress={handlePlantItemPress(plant)}>
+                    <Icon name="arrow-forward"/>
+                  </TouchableOpacity>
+                </Right>
+              </ListItem>
           ))}
           </List>
       </Content>
