@@ -61,10 +61,6 @@ const SingleScreen = props => {
   };
 
   const handleDeletePlantPress = () => {
-    console.log("-------------------------");
-    console.log("-------------------------");
-    console.log(plantId);
-    console.log("-------------------------");
     props.deletePlant(plantId);
     navigation.navigate("Home");
   };
@@ -112,14 +108,14 @@ const SingleScreen = props => {
                     onPress={handleDeleteReminderPress(reminder.id)}
                     transparent
                   >
-                    <Icon name="icon-trash" />
+                    <Icon name="close" />
                   </Button>
                 </View>
               ))}
             </View>
             <Button onPress={handleDeletePlantPress} transparent>
               <Text>Delete Plant</Text>
-              <Icon name="icon-trash" />
+              <Icon name="close" />
             </Button>
             {isAddNewReminderInputShown ? (
               <View>
