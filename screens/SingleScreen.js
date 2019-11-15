@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { Text, Radio, ListItem, Left, Right, Container, Header, Button, Icon, Body, Title, Content } from 'native-base';
 
-import { addReminder } from "../redux/reducers/plants"
+import { addReminder, deleteReminder, deletePlant } from "../redux/reducers/plants"
 import {reminderIntervalTypes, translations} from "../constants/ReminderIntervalTypes";
 
 const SingleScreen = (props) => {
@@ -37,6 +37,19 @@ const SingleScreen = (props) => {
 
     const handleNewReminderIntervalChange = reminderIntervalType => () => {
         setNewReminderInterval(reminderIntervalType)
+    }
+    
+    const handleDeleteReminderPress = reminderId => () => {
+        props.deleteReminder(plantId, reminderId)
+    }
+    
+    const handleDeletePlantPress = () => {
+        console.log("-------------------------")
+        console.log("-------------------------")
+        console.log(plantId)
+        console.log("-------------------------")
+        props.deletePlant(plantId)
+        navigation.navigate('Home')
     }
 
     const goBack = () => { navigation.goBack() }
@@ -74,9 +87,18 @@ const SingleScreen = (props) => {
         </View>
         <View>
             {selectedPlant.reminders.map(reminder => (
-                <Text key={reminder.id}>{reminder.name} - {reminder.interval}</Text>
+                <View key={reminder.id}>
+                    <Text>{reminder.name} - {reminder.interval}</Text>
+                    <Button onPress={handleDeleteReminderPress(reminder.id)} transparent>
+                        <Icon name='icon-trash' />
+                    </Button>
+                </View>
             ))}
         </View>
+        <Button onPress={handleDeletePlantPress} transparent>
+            <Text>Delete Plant</Text>
+                        <Icon name='icon-trash' />
+                    </Button>
         {isAddNewReminderInputShown ?
            <View>
                <TextInput
@@ -168,7 +190,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    addReminder
+    addReminder,
+    deleteReminder,
+    deletePlant
 }
   
 export default connect(mapStateToProps, mapDispatchToProps)(SingleScreen)
