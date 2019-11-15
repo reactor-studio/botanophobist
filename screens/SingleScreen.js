@@ -1,5 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import {
   Image,
   Platform,
@@ -11,21 +12,21 @@ import {
 import { Container, Text } from 'native-base';
 
 import { MonoText } from '../components/StyledText';
+import { addReminder } from "../redux/reducers/plants"
 
-import plants from "../mocks/plants";
-
-export default function SingleScreen(props) {
+const SingleScreen = (props) => {
     const [isAddNewReminderInputShown, setIsAddNewReminderInputShown] = useState(false)
     
-    const toggleIsAddNewReminderInputShown = () => { setIsAddNewReminderInputShown(!isAddNewReminderInputShown) }
-
-    const { navigation } = props;
-
-    const goBack = () => { navigation.goBack() }
-
+    const { navigation, plants } = props;
     const plant = navigation.getParam('plant')
     const plantId = plant.id
     const selectedPlant = plants.find(plant => plant.id === plantId)
+
+    const toggleIsAddNewReminderInputShown = () => { setIsAddNewReminderInputShown(!isAddNewReminderInputShown) }
+    const handleAddReminderPress = () => {
+        props.addReminder(plant.id)
+    }
+    const goBack = () => { navigation.goBack() }
 
     if (!selectedPlant) {
         return (
@@ -61,7 +62,10 @@ export default function SingleScreen(props) {
             ))}
         </View>
         {isAddNewReminderInputShown ?
+           <View>
+               <Text onPress={handleAddReminderPress}>Add new</Text>
             <Text onPress={toggleIsAddNewReminderInputShown}>Cancel</Text>
+            </View>
      : 
      <Text onPress={toggleIsAddNewReminderInputShown}>Add New Reminder</Text>
     }
@@ -87,3 +91,13 @@ const styles = StyleSheet.create({
 });
 
 
+
+const mapStateToProps = state => ({
+    plants: state.plants.plants
+  })
+
+  const mapDispatchToProps = {
+      addReminder
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(SingleScreen)

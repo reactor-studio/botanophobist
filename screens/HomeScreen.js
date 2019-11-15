@@ -1,5 +1,7 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
+
+import { connect } from 'react-redux';
 import {
   Image,
   Platform,
@@ -11,12 +13,12 @@ import {
 import { Container, Text } from 'native-base';
 
 import { MonoText } from '../components/StyledText';
-import plants from "../mocks/plants";
 
-export default function HomeScreen(props) {
+const HomeScreen = (props) => {
+  const { plants, navigation } = props;
+  
   const handlePlantItemPress = plant => () => {
-
-    props.navigation.navigate('Single', { plant })
+    navigation.navigate('Single', { plant })
   }
   
   return (
@@ -221,3 +223,8 @@ const plantItemStyles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = state => ({
+  plants: state.plants.plants
+})
+
+export default connect(mapStateToProps)(HomeScreen)

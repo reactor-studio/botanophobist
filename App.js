@@ -2,30 +2,33 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
+import { Provider } from 'react-redux';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import store from "./redux/store"
 import AppNavigator from './navigation/AppNavigator';
 
-export default function App(props) {
+const App = (props) => {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return (
-      <AppLoading
-        startAsync={loadResourcesAsync}
-        onError={handleLoadingError}
-        onFinish={() => handleFinishLoading(setLoadingComplete)}
-      />
-    );
-  } else {
-    return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
-    );
-  }
+  return (
+    <Provider store={store}>
+    {!isLoadingComplete && !props.skipLoadingScreen ?
+    
+    <AppLoading
+    startAsync={loadResourcesAsync}
+    onError={handleLoadingError}
+    onFinish={() => handleFinishLoading(setLoadingComplete)}
+  />
+ : 
+ <View style={styles.container}>
+   {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+   <AppNavigator />
+ </View>
+}
+  </Provider>
+  )
 }
 
 async function loadResourcesAsync() {
@@ -60,3 +63,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+export default App
