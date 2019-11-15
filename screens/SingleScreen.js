@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   Platform,
@@ -12,17 +12,28 @@ import { Container, Text } from 'native-base';
 
 import { MonoText } from '../components/StyledText';
 
-import plants from "../constants/plants";
+import plants from "../mocks/plants";
 
 export default function SingleScreen(props) {
+    const [isAddNewReminderInputShown, setIsAddNewReminderInputShown] = useState(false)
+    
+    const toggleIsAddNewReminderInputShown = () => { setIsAddNewReminderInputShown(!isAddNewReminderInputShown) }
+
     const { navigation } = props;
 
-    const goBack = () => {
-        navigation.goBack()
-    }
+    const goBack = () => { navigation.goBack() }
 
-    const plantId = navigation.getParam('plantId')
+    const plant = navigation.getParam('plant')
+    const plantId = plant.id
     const selectedPlant = plants.find(plant => plant.id === plantId)
+
+    if (!selectedPlant) {
+        return (
+            <View style={styles.container}>
+                <Text>No Plant</Text>
+            </View>
+        )
+    }
 
   return (
     <View style={styles.container}>
@@ -38,15 +49,22 @@ export default function SingleScreen(props) {
 
         <View>
             <Text>
-              {}
-            </Text>
-            <Text>
               {selectedPlant.name}
             </Text>
             <Text>
               {selectedPlant.description}
             </Text>
         </View>
+        <View>
+            {selectedPlant.reminders.map(reminder => (
+                <Text key={reminder.id}>{reminder.name} - {reminder.interval}</Text>
+            ))}
+        </View>
+        {isAddNewReminderInputShown ?
+            <Text onPress={toggleIsAddNewReminderInputShown}>Cancel</Text>
+     : 
+     <Text onPress={toggleIsAddNewReminderInputShown}>Add New Reminder</Text>
+    }
       </ScrollView>
     </View>
   );

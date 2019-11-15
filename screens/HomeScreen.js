@@ -11,12 +11,12 @@ import {
 import { Container, Text } from 'native-base';
 
 import { MonoText } from '../components/StyledText';
-import plants from "../constants/plants";
+import plants from "../mocks/plants";
 
 export default function HomeScreen(props) {
   const handlePlantItemPress = plant => () => {
 
-    props.navigation.navigate('Single', { plantId: plant.id})
+    props.navigation.navigate('Single', { plant })
   }
   
   return (
