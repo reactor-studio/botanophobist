@@ -17,6 +17,10 @@ const HomeScreen = (props) => {
   const handlePlantItemPress = plant => () => {
     navigation.navigate('Single', { plant })
   }
+
+  const handleAddNewPlantPress = () => {
+    navigation.navigate('AddNewPlant')
+  }
   
   return (
     <Container>
@@ -26,7 +30,7 @@ const HomeScreen = (props) => {
             <Title>Plants</Title>
           </Body>
           <Right>
-            <Button transparent>
+            <Button transparent onPress={handleAddNewPlantPress}>
               <Icon name='add' style={{color: "blue"}} />
             </Button>
           </Right>
@@ -34,7 +38,7 @@ const HomeScreen = (props) => {
       <Content>
         <List>
           {plants.map(plant => (
-              <ListItem avatar>
+              <ListItem avatar key={plant.id}>
                 <Left>
                   <Thumbnail source={{ uri: 'https://www.ikea.com/PIAimages/0614197_PE686822_S5.JPG?f=s' }} small />
                 </Left>

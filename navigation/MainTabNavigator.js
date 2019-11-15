@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
+import AddNewPlantScreen from '../screens/AddNewPlant';
 import HomeScreen from '../screens/HomeScreen';
 import SingleScreen from '../screens/SingleScreen';
 import TasksScreen from '../screens/TasksScreen';
@@ -16,7 +17,8 @@ const config = Platform.select({
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Single: SingleScreen
+    Single: SingleScreen,
+    AddNewPlant: AddNewPlantScreen,
   },
   config
 );

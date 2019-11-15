@@ -5,8 +5,8 @@ export const reminderIntervalTypes = {
 }
 
 export const translations = {
-    [DAILY]: "Once a day",
-    [WEEKLY]: "Once a week",
-    [MONTHLY]: "Once a month"
+    [reminderIntervalTypes.DAILY]: "Once a day",
+    [reminderIntervalTypes.WEEKLY]: "Once a week",
+    [reminderIntervalTypes.MONTHLY]: "Once a month"
 }
 
